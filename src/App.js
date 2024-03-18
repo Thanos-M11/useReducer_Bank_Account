@@ -88,12 +88,13 @@ function reducer(state, action) {
       if (state.loan === 0)
         return {
           ...state,
-          loan: action.payload,
-          balance: state.balance + action.payload,
+          loan: state.transAmount,
+          balance: state.balance + state.transAmount,
           btnTransAmounts: state.btnTransAmounts.map((btn) => {
             return { ...btn, isSelected: false };
           }),
           otherAmountBtn: false,
+          transAmount: 0,
         };
       return {
         ...state,
@@ -183,10 +184,10 @@ export default function App() {
       </p>
       <p>
         <button
-          onClick={() => dispatch({ type: "requestLoan", payload: 5000 })}
+          onClick={() => dispatch({ type: "requestLoan" })}
           disabled={!isActive || loan > 0}
         >
-          Request a loan of 5000
+          Request a loan of {loan > 0 ? "" : transAmount || ""} &euro;
         </button>
       </p>
       <p>
